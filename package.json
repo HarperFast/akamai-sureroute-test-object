@@ -1,8 +1,15 @@
 {
   "name": "@harperdb/akamai-sureroute-test-object",
   "version": "1.0.2",
-  "description": "A component for providing the sure route test object endpoint for Akamai load balancers",
+  "description": "A component for providing the SureRoute test object endpoint for Akamai load balancers",
   "type": "module",
-  "dependencies": {},
-  "license": "Apache-2.0"
+  "scripts": {
+    "test:integration": "harper-integration-test-run integrationTests/**/*.test.ts"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@harperfast/integration-testing": "^0.4.0",
+    "harper": "^5.0.29",
+    "typescript": "^6.0.3"
+  }
 }
