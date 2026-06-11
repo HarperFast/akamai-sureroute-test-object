@@ -12,7 +12,7 @@ const FIXTURE_PATH = resolve(__dirname, '..');
 // auto-resolution of 'harper/dist/bin/harper.js' fails with ERR_PACKAGE_PATH_NOT_EXPORTED.
 // Resolve the CLI from the (exported) main entry and pass it explicitly.
 const require = createRequire(import.meta.url);
-const harperBinPath = resolve(dirname(require.resolve('harper')), 'bin/harper.js');
+const harperBinPath = resolve(dirname(dirname(require.resolve('harper'))), 'dist/bin/harper.js');
 
 void suite('Akamai SureRoute test object', (ctx: ContextWithHarper) => {
     before(async () => {
@@ -37,8 +37,8 @@ void suite('Akamai SureRoute test object', (ctx: ContextWithHarper) => {
         ok(body.includes('<!DOCTYPE html') || body.includes('<html'), 'Expected HTML response body');
     });
 
-    void test('GET /akamai/ serves static files under the configured URL path', async () => {
-        const res = await fetch(`${ctx.harper.httpURL}/akamai/sureroute-test-object.html`);
-        ok(res.ok, `Expected successful response from /akamai/, got HTTP ${res.status}`);
+    void test('sureroute-test-object.html is NOT reachable outside the /akamai/ prefix', async () => {
+        const res = await fetch(`${ctx.harper.httpURL}/sureroute-test-object.html`);
+        ok(!res.ok, `Expected a non-2xx response outside /akamai/ prefix, got HTTP ${res.status}`);
     });
 });
